@@ -117,6 +117,16 @@ class HBNBCommand(cmd.Cmd):
         """ Overrides the emptyline method of CMD """
         pass
 
+    def set_type(self, val):
+        try:
+            float_value = float(val)
+            if float_value.is_integer():
+                return int(val)
+            else:
+                return float(val)
+        except ValueError:
+            return val
+        
     def do_create(self, args):
         """ Create an object of any class"""
         if args.split():
@@ -132,8 +142,8 @@ class HBNBCommand(cmd.Cmd):
         if params:
             kwargs = {}
             for param in params:
-                key, value = param.replace('"', '').split('=')
-                kwargs[key] = value
+                key, value = param.replace('"', '').split('=')        
+                kwargs[key] = self.set_type(value) if "id" not in key else value
             kwargs['updated_at'] = kwargs['created_at'] = now.strftime('%Y-%m-%dT%H:%M:%S.%f')
             kwargs['__class__'] = class_name
             kwargs['id'] = str(uuid.uuid4())
