@@ -107,7 +107,7 @@ class HBNBCommand(cmd.Cmd):
     def do_EOF(self, arg):
         """ Handles EOF to exit program """
         print()
-        exit()
+        exit(0)
 
     def help_EOF(self):
         """ Prints the help documentation for EOF """
@@ -129,6 +129,8 @@ class HBNBCommand(cmd.Cmd):
         
     def do_create(self, args):
         """ Create an object of any class"""
+        params = None
+        class_name = None
         if args.split():
             args = args.split()
             class_name = args[0]
