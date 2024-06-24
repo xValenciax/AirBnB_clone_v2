@@ -148,7 +148,9 @@ class HBNBCommand(cmd.Cmd):
             for param in params:
                 if '=' not in param or param.count('=') != 1:
                     return
-                key, value = param.replace('"', '').split('=')
+                key, value = param.split('=')
+                value = value.replace('"', '').replace('_', ' ')
+                print(key, value)
                 kwargs[key] = self.set_type(value) if "id" not in key else value
             kwargs['__class__'] = class_name
             new_instance = HBNBCommand.classes[class_name](**kwargs)
