@@ -144,7 +144,7 @@ class HBNBCommand(cmd.Cmd):
             kwargs['id'] = str(uuid.uuid4())
             kwargs['created_at'] = kwargs['updated_at'] = now.strftime('%Y-%m-%dT%H:%M:%S.%f')
             for param in params:
-                if '=' not in param or if param.count('=') != 1:
+                if '=' not in param or param.count('=') != 1:
                     return
                 key, value = param.replace('"', '').split('=')
                 kwargs[key] = self.set_type(value) if "id" not in key else value
