@@ -141,12 +141,12 @@ class HBNBCommand(cmd.Cmd):
             return
         if params:
             kwargs = {}
+            kwargs['id'] = str(uuid.uuid4())
+            kwargs['created_at'] = kwargs['updated_at'] = now.strftime('%Y-%m-%dT%H:%M:%S.%f')
             for param in params:
                 key, value = param.replace('"', '').split('=')        
                 kwargs[key] = self.set_type(value) if "id" not in key else value
-            kwargs['updated_at'] = kwargs['created_at'] = now.strftime('%Y-%m-%dT%H:%M:%S.%f')
             kwargs['__class__'] = class_name
-            kwargs['id'] = str(uuid.uuid4())
             new_instance = HBNBCommand.classes[class_name](**kwargs)
             storage.new(new_instance)
         else:
