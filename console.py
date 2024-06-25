@@ -3,6 +3,7 @@
 
 import cmd
 import sys
+import os
 import uuid
 from datetime import datetime
 from models.base_model import BaseModel
@@ -150,7 +151,6 @@ class HBNBCommand(cmd.Cmd):
                     return
                 key, value = param.split('=')
                 value = value.replace('"', '').replace('_', ' ')
-                print(key, value)
                 kwargs[key] = self.set_type(value) if "id" not in key else value
             kwargs['__class__'] = class_name
             new_instance = HBNBCommand.classes[class_name](**kwargs)
@@ -235,17 +235,24 @@ class HBNBCommand(cmd.Cmd):
     def do_all(self, args):
         """ Shows all objects, or all objects of a class"""
         print_list = []
+        objects = {}
+        
+        if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+            objects.update(storage.all())
 
+        else:
+            objects.update(storage.FileStorage.__objects)
+    
         if args:
-            args = args.split(' ')[0]  # remove possible trailing args
+            args = args.split(' ')[0]
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in objects.items():
                 if k.split('.')[0] == args:
                     print_list.append(str(v))
         else:
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in _objects.items():
                 print_list.append(str(v))
 
         print(print_list)
