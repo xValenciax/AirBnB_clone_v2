@@ -88,7 +88,7 @@ class DBStorage:
         """Deletes obj from __objects if it exists"""
         if not obj:
             return
-        classes = {'User': User, 'State': State, 'City': City, 'Amenity': Amenity, 'Place': Place, 'Review': Review}
+        classes = {'State': State, 'City': City}
         for _cls in classes:
             self.__session.query(_cls).filter(_cls.id == obj.id).delete(synchronize_session='fetch')
 
