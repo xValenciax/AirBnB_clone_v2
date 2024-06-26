@@ -13,7 +13,7 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 import os
 
 
-storage_type = os.getenv('HBNB_TYPE_STORAGE')
+classes = {'State': State, 'City': City, 'User': User}
 
 class DBStorage:
     """This class manages database storage of hbnb models"""
@@ -46,7 +46,6 @@ class DBStorage:
         """Returns a dictionary of models currently in storage"""
         objects = []
         cls_indices = []
-        classes = {'State': State, 'City': City}
         
         if cls:
             rows = self.__session.query(cls)
@@ -88,7 +87,6 @@ class DBStorage:
         """Deletes obj from __objects if it exists"""
         if not obj:
             return
-        classes = {'State': State, 'City': City}
         for _cls in classes:
             self.__session.query(_cls).filter(_cls.id == obj.id).delete(synchronize_session='fetch')
 
