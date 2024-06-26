@@ -13,7 +13,7 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 import os
 
 
-classes = {'State': State, 'City': City, 'User': User}
+classes = {'State': State, 'City': City, 'User': User, 'Place': Place}
 
 class DBStorage:
     """This class manages database storage of hbnb models"""
